@@ -700,6 +700,9 @@ td li::marker { color: var(--purple); }
 
 /* ---------- Produtos & Salários ---------- */
 .duas-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
+/* com o relatório de salários aberto, a dupla de colunas vira coluna única:
+   a seção cresce na largura toda em vez de deixar um vazio ao lado */
+.duas-colunas:has(details.relatorio[open]) { grid-template-columns: 1fr; }
 .produto { margin-bottom: 14px; transition: transform .25s ease, box-shadow .25s ease; border: 1px solid rgba(130, 10, 209, 0.1); border-radius: var(--radius); padding: 20px; background: rgba(255,255,255,0.6); backdrop-filter: blur(8px); }
 .produto:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
 .produto h4 { margin-bottom: 7px; }
@@ -770,7 +773,11 @@ details.relatorio > summary:hover { transform: translateY(-2px); filter: brightn
 /* o quadro 2 é estreito: dispensa a largura mínima padrão das tabelas */
 .relatorio-corpo .tabela-scroll table { min-width: 0; }
 /* listas de vagas/cargos (substituem tabelas largas que não cabem na coluna) */
-.lista-vagas { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.lista-vagas {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
+}
 .lista-vagas li {
   display: flex; justify-content: space-between; align-items: center; gap: 6px 18px; flex-wrap: wrap;
   padding: 11px 14px;
